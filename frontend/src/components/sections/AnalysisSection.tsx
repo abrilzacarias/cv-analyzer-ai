@@ -2,6 +2,7 @@ import { BarChart3, Languages } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { JobAnalysisForm } from "@/components/forms/JobAnalysisForm"
 import { TranslationForm } from "@/components/forms/TranslationForm"
+import { useTranslation } from "react-i18next"
 
 interface AnalysisSectionProps {
   activeTab: string
@@ -30,16 +31,18 @@ export function AnalysisSection({
   isTranslating,
   uploadedFile,
 }: AnalysisSectionProps) {
+  const { t } = useTranslation()
+
   return (
-    <Tabs value={activeTab} onValueChange={onTabChange} className="mb-8">
+    <Tabs value={activeTab} onValueChange={onTabChange} className="mb-8 ">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="analyze" className="flex items-center gap-2">
+        <TabsTrigger value="analyze" className="flex items-center gap-2 hover:cursor-pointer">
           <BarChart3 className="w-4 h-4" />
-          Análisis por Puesto
+          {t("analyze_tab")}
         </TabsTrigger>
-        <TabsTrigger value="translate" className="flex items-center gap-2">
+        <TabsTrigger value="translate" className="flex items-center gap-2 hover:cursor-pointer">
           <Languages className="w-4 h-4" />
-          Traducción
+          {t("translate_tab")}
         </TabsTrigger>
       </TabsList>
 

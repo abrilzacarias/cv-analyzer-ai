@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .routers import router
 
 app = FastAPI(
     title="CV AI Assistant",
@@ -15,5 +16,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# app.include_router(suggestions.router, prefix="/suggestions", tags=["Sugerencias"])
-
+app.include_router(router)

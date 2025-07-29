@@ -1,8 +1,9 @@
-import { Languages } from "lucide-react"
+import { Languages, Loader2 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
+import { useTranslation } from "react-i18next"
 
 interface TranslationFormProps {
   targetLanguage: string
@@ -19,49 +20,45 @@ export function TranslationForm({
   isTranslating,
   uploadedFile,
 }: TranslationFormProps) {
+  const { t } = useTranslation()
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Languages className="w-5 h-5" />
-          Traducir CV
+          {t("translate_button")}
         </CardTitle>
-        <CardDescription>Traduce tu CV a otro idioma manteniendo el formato profesional</CardDescription>
+        <CardDescription>{t("translate_description")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <Label htmlFor="target-language">Idioma de destino</Label>
+          <Label htmlFor="target-language">{t("translation_target_language_label")}</Label>
           <Select value={targetLanguage} onValueChange={onTargetLanguageChange}>
             <SelectTrigger className="mt-1">
-              <SelectValue placeholder="Selecciona un idioma" />
+              <SelectValue placeholder={t("placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="en">🇺🇸 Inglés</SelectItem>
-              <SelectItem value="fr">🇫🇷 Francés</SelectItem>
-              <SelectItem value="de">🇩🇪 Alemán</SelectItem>
-              <SelectItem value="it">🇮🇹 Italiano</SelectItem>
-              <SelectItem value="pt">🇧🇷 Portugués</SelectItem>
-              <SelectItem value="zh">🇨🇳 Chino</SelectItem>
-              <SelectItem value="ja">🇯🇵 Japonés</SelectItem>
-              <SelectItem value="ko">🇰🇷 Coreano</SelectItem>
+              <SelectItem value="en">🇺🇸 English</SelectItem>
+                <SelectItem value="es">🇪🇸 Spanish</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <Button
           onClick={onTranslate}
           disabled={!uploadedFile || !targetLanguage || isTranslating}
-          className="w-full bg-green-600 hover:bg-green-700"
+          className="w-full bg-primary"
           size="lg"
         >
           {isTranslating ? (
             <>
-              <Languages className="w-4 h-4 mr-2 animate-spin" />
-              Traduciendo...
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              {t("translating_text")}
             </>
           ) : (
             <>
               <Languages className="w-4 h-4 mr-2" />
-              Traducir CV
+              {t("translate_tab")}
             </>
           )}
         </Button>

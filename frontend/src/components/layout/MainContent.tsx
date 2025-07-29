@@ -1,9 +1,10 @@
 import type React from "react"
 import { HeroSection } from "@/components/sections/HeroSection"
-import { FileUpload } from "@/components/UploadFile"
+import { FileUpload } from "@/components/forms/UploadFile"
 import { AnalysisSection } from "@/components/sections/AnalysisSection"
 import { ResultsSection } from "@/components/results/ResultsSection"
 import { FeaturesSection } from "@/components/sections/FeaturesSection"
+import { AnalysisResult } from "@/components/results/AnalysisResult"
 
 interface MainContentProps {
   uploadedFile: File | null
@@ -23,6 +24,9 @@ interface MainContentProps {
   progress: number
   onNewAnalysis: () => void
   onNewTranslation: () => void
+  analysisResult: AnalysisResult | null
+  translationResult: string | null
+  error: string | null
 }
 
 export function MainContent({
@@ -43,12 +47,20 @@ export function MainContent({
   progress,
   onNewAnalysis,
   onNewTranslation,
+  analysisResult,
+  translationResult,
+  error,
 }: MainContentProps) {
   return (
-    <main className="container mx-auto px-4 py-8 max-w-4xl">
+    <main className="container mx-auto px-4 pb-8 max-w-4xl">
       <HeroSection />
+      
+      <FeaturesSection />
 
-      <FileUpload uploadedFile={uploadedFile} onFileUpload={onFileUpload} />
+      <FileUpload 
+        uploadedFile={uploadedFile} 
+        onFileUpload={onFileUpload} 
+      />
 
       <AnalysisSection
         activeTab={activeTab}
@@ -74,9 +86,11 @@ export function MainContent({
         targetLanguage={targetLanguage}
         onNewAnalysis={onNewAnalysis}
         onNewTranslation={onNewTranslation}
+        analysisResult={analysisResult}
+        translationResult={translationResult}
+        error={error}
       />
 
-      <FeaturesSection />
     </main>
   )
 }

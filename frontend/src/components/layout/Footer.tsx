@@ -1,82 +1,60 @@
-import { Github, Twitter, Mail, Heart } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function Footer() {
+  const { t } = useTranslation();
+
+  const handleGmailClick = () => {
+    const email = "abrilzacarias6@gmail.com";
+    const subject = "Contacto desde CV Analyzer";
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(
+      subject
+    )}`;
+    window.open(gmailUrl, "_blank");
+  };
+
   return (
     <footer className="border-t bg-background/80 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="space-y-3">
+      <div className="container mx-auto py-8 px-32">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          <div className="space-y-3 max-w-md">
             <h3 className="font-semibold text-foreground">CV Analyzer AI</h3>
-            <p className="text-sm text-muted-foreground">
-              Optimiza tu CV con inteligencia artificial y mejora tus oportunidades laborales.
-            </p>
+            <p className="text-sm text-muted-foreground">{t("footer_text")}</p>
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-medium text-foreground">Producto</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  Características
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  Precios
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  API
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="font-medium text-foreground">Soporte</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  Documentación
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  Guías
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  Contacto
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="font-medium text-foreground">Síguenos</h4>
+            <h4 className="font-medium text-foreground">{t("follow_me")}</h4>
             <div className="flex space-x-3">
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+              <a
+                href="https://github.com/tu-usuario"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:scale-110 transform"
+                aria-label="GitHub"
+              >
                 <Github className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Twitter className="w-5 h-5" />
+              <a
+                href="https://linkedin.com/in/tu-perfil"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:scale-110 transform"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+              <button
+                onClick={handleGmailClick}
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:scale-110 transform hover:cursor-pointer"
+                aria-label="Enviar email via Gmail"
+                title="Abrir Gmail"
+              >
                 <Mail className="w-5 h-5" />
-              </a>
+              </button>
             </div>
           </div>
         </div>
-
-        <div className="border-t mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">© 2024 CV Analyzer AI. Todos los derechos reservados.</p>
-          <p className="text-sm text-muted-foreground flex items-center gap-1 mt-2 md:mt-0">
-            Hecho con <Heart className="w-4 h-4 text-red-500" /> para tu éxito profesional
-          </p>
-        </div>
       </div>
     </footer>
-  )
+  );
 }

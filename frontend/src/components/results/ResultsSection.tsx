@@ -2,6 +2,8 @@ import { AnalysisProgress } from "@/components/results/AnalysisProgress"
 import { AnalysisResults } from "@/components/results/AnalysisResults"
 import { TranslationResults } from "@/components/results/TranslationResult"
 import { EmptyState } from "@/components/results/EmptyState"
+import { ErrorState } from "@/components/results/ErrorState"
+import type { AnalysisResult } from "./AnalysisResult"
 
 interface ResultsSectionProps {
   isAnalyzing: boolean
@@ -13,6 +15,9 @@ interface ResultsSectionProps {
   targetLanguage: string
   onNewAnalysis: () => void
   onNewTranslation: () => void
+  analysisResult: AnalysisResult | null
+  translationResult: string | null
+  error: string | null
 }
 
 export function ResultsSection({
@@ -25,22 +30,36 @@ export function ResultsSection({
   targetLanguage,
   onNewAnalysis,
   onNewTranslation,
+  analysisResult,
+  translationResult,
+  error,
 }: ResultsSectionProps) {
+  const showEmptyState = !isAnalyzing && !analysisComplete && !isTranslating && !translationComplete && !error;
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-8">
+      {/* Error State */}
+      {error && <ErrorState />}
+
       {/* Analysis Progress */}
-      {isAnalyzing && <AnalysisProgress progress={progress} />}
+      {isAnalyzing && !error && <AnalysisProgress progress={progress} />}
 
       {/* Analysis Results */}
-      {analysisComplete && activeTab === "analyze" && <AnalysisResults onNewAnalysis={onNewAnalysis} />}
+      {analysisComplete && analysisResult && !error && (
+        <AnalysisResults onNewAnalysis={onNewAnalysis} analysisResult={analysisResult} />
+      )}
 
       {/* Translation Results */}
-      {translationComplete && activeTab === "translate" && (
-        <TranslationResults targetLanguage={targetLanguage} onNewTranslation={onNewTranslation} />
+      {translationComplete && translationResult && !error && (
+        <TranslationResults 
+          targetLanguage={targetLanguage} 
+          onNewTranslation={onNewTranslation} 
+          translationResult={translationResult} 
+        />
       )}
 
       {/* Empty State */}
-      {!isAnalyzing && !analysisComplete && !isTranslating && !translationComplete && <EmptyState />}
+      {showEmptyState && <EmptyState />}
     </div>
   )
 }

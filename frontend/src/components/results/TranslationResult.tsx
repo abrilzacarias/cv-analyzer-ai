@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 interface TranslationResultsProps {
   targetLanguage: string
   onNewTranslation: () => void
+  translationResult: string | null
 }
 
 const getLanguageName = (code: string): string => {
@@ -35,7 +36,7 @@ const getTranslationPreview = (code: string): string => {
   return previews[code] || "Traducción completada..."
 }
 
-export function TranslationResults({ targetLanguage, onNewTranslation }: TranslationResultsProps) {
+export function TranslationResults({ targetLanguage, onNewTranslation, translationResult }: TranslationResultsProps) {
   return (
     <Card>
       <CardHeader>
@@ -50,7 +51,7 @@ export function TranslationResults({ targetLanguage, onNewTranslation }: Transla
       <CardContent className="space-y-4">
         <div className="p-4 bg-muted rounded-lg">
           <h4 className="font-medium mb-2">Vista previa de la traducción:</h4>
-          <p className="text-sm text-muted-foreground">{getTranslationPreview(targetLanguage)}</p>
+          <p className="text-sm text-muted-foreground">{translationResult}</p>
         </div>
 
         <div className="flex gap-3">

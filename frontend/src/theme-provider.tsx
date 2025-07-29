@@ -1,9 +1,7 @@
-"use client"
-
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
 
-type Theme = "dark" | "light"
+type Theme = "dark" | "light" | "system"
 
 type ThemeProviderProps = {
   children: React.ReactNode
@@ -17,7 +15,7 @@ type ThemeProviderState = {
 }
 
 const initialState: ThemeProviderState = {
-  theme: "light",
+  theme: "system",
   setTheme: () => null,
 }
 
@@ -25,28 +23,29 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
 export function ThemeProvider({
   children,
-  defaultTheme = "light",
+  defaultTheme = "system",
   storageKey = "cv-analyzer-theme",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme)
+  const [theme, setTheme] = useState<Theme>(
+    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  )
 
   useEffect(() => {
-    // Cargar tema del localStorage
-    const savedTheme = localStorage.getItem(storageKey) as Theme
-    if (savedTheme) {
-      setTheme(savedTheme)
-    }
-  }, [storageKey])
+    const root = window.document.documentElement
 
-  useEffect(() => {
-    // Aplicar tema al HTML
-    const root = document.documentElement
     root.classList.remove("light", "dark")
-    root.classList.add(theme)
 
-    console.log("🎨 Theme applied:", theme)
-    console.log("📋 HTML classes:", root.className)
-    console.log("🎯 Background color:", getComputedStyle(document.body).backgroundColor)
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light"
+
+      root.classList.add(systemTheme)
+      return
+    }
+
+    root.classList.add(theme)
   }, [theme])
 
   const value = {
@@ -54,17 +53,22 @@ export function ThemeProvider({
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme)
       setTheme(theme)
-      console.log("💾 Theme saved:", theme)
     },
   }
 
-  return <ThemeProviderContext.Provider value={value}>{children}</ThemeProviderContext.Provider>
+  return (
+    <ThemeProviderContext.Provider value={value}>
+      {children}
+    </ThemeProviderContext.Provider>
+  )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext)
-  if (context === undefined) {
+
+  if (context === undefined)
     throw new Error("useTheme must be used within a ThemeProvider")
-  }
+
   return context
 }

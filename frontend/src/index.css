@@ -10,45 +10,61 @@
   --color-muted-foreground: #64748b;
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
-  --color-primary: #2563eb;
-  --color-primary-foreground: #ffffff;
-  --color-secondary: #f1f5f9;
+  --color-primary: #0d9488;
+  --color-primary-foreground: #ffffff;  
+  --color-secondary: #494cf2;
   --color-secondary-foreground: #0f172a;
-  --color-accent: #f1f5f9;
+  --color-accent: #ec7119cf;
   --color-accent-foreground: #0f172a;
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
   --color-popover: #ffffff;
   --color-popover-foreground: #0f172a;
-  --color-ring: #2563eb;
+  --color-ring: #0d9488;
+
+  /* Animaciones */
+  --animate-error-pulse: error-pulse 2s infinite;
+
+  @keyframes error-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+  }
 }
 
 .dark {
   /* Colores para modo oscuro */
-  --color-background: #0f172a;
+  --color-background: #0F172A;
   --color-foreground: #f8fafc;
-  --color-card: #1e293b;
+  --color-card: #1E293B;
   --color-card-foreground: #f8fafc;
   --color-muted: #334155;
   --color-muted-foreground: #94a3b8;
   --color-border: #475569;
   --color-input: #475569;
-  --color-primary: #3b82f6;
+  --color-primary: #0d9488;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #334155;
-  --color-secondary-foreground: #f8fafc;
-  --color-accent: #334155;
+  --color-secondary: #494cf2;
+  --color-secondary-foreground: #0f172a;
+  --color-accent: #ec7119cf;
   --color-accent-foreground: #f8fafc;
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
   --color-popover: #1e293b;
   --color-popover-foreground: #f8fafc;
-  --color-ring: #3b82f6;
+  --color-ring: #3E40CC;
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
+    font-family: 'Inter', sans-serif;
   }
 
   body {
@@ -58,12 +74,252 @@
   }
 }
 
-/* Test visual para verificar que funciona */
-.theme-test {
-  padding: 1rem;
-  margin: 1rem;
-  background-color: var(--color-card);
-  color: var(--color-card-foreground);
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.dark .hover-lift:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== ANIMACIONES PARA ANALYSIS PROGRESS ===== */
+
+/* Entrada del componente */
+@keyframes progress-entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Pulso del icono cerebro */
+@keyframes progress-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(13, 148, 136, 0);
+    transform: scale(1.05);
+  }
+}
+
+/* Animación del cerebro */
+@keyframes progress-brain {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-2deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(2deg) scale(1.05);
+  }
+}
+
+/* Línea decorativa del título */
+@keyframes progress-line {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 3rem;
+    opacity: 1;
+  }
+}
+
+/* Fade in del mensaje */
+@keyframes progress-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animación del mensaje dinámico */
+@keyframes progress-message {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Chispa del icono Zap */
+@keyframes progress-spark {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+/* Animación de la barra de progreso */
+@keyframes progress-bar {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Shimmer effect para la barra */
+@keyframes progress-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Texto del progreso */
+@keyframes progress-text {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Puntos de carga */
+@keyframes progress-dot-1 {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+@keyframes progress-dot-2 {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  30% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+@keyframes progress-dot-3 {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  30% {
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
+}
+
+/* Decoración final */
+@keyframes progress-decoration {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  100% {
+    opacity: 1;
+    width: 4rem;
+  }
+}
+
+/* Clases de animación */
+.animate-error-entrance {
+  animation: error-entrance 0.5s ease-out;
+}
+
+.animate-error-shake {
+  animation: error-shake 0.6s ease-in-out;
+}
+
+.animate-error-pulse {
+  animation: error-pulse 2s infinite;
+}
+
+.animate-error-slide-in {
+  animation: error-slide-in 0.4s ease-out 0.1s both;
+}
+
+.animate-error-line {
+  animation: error-line 0.6s ease-out 0.3s both;
+}
+
+.animate-error-fade-in {
+  animation: error-fade-in 0.4s ease-out 0.2s both;
+}
+
+.animate-results-fade-in {
+  animation: results-fade-in 0.6s ease-out;
+}
+
+/* Progress animations */
+.animate-progress-pulse {
+  animation: progress-pulse 2s infinite;
+}
+
+.animate-progress-brain {
+  animation: progress-brain 3s ease-in-out infinite;
+}
+
+.animate-progress-dot-1 {
+  animation: progress-dot-1 1.5s ease-in-out infinite;
+}
+
+.animate-progress-dot-2 {
+  animation: progress-dot-2 1.5s ease-in-out infinite 0.2s;
+}
+
+.animate-progress-dot-3 {
+  animation: progress-dot-3 1.5s ease-in-out infinite 0.4s;
+}
+
+/* Shimmer effect para la barra de progreso */
+.progress-shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 200% 100%;
+  animation: progress-shimmer 2s infinite;
 }
