@@ -117,6 +117,7 @@ def analyze_cv_with_gemini(cv_text: str, job_description: str, target_language: 
         - Formato (format): ¿Hay mejoras de formato que harían tu CV más legible?
 
     Formato de salida (JSON estricto):
+    **La única salida que debes proporcionar es el objeto JSON. No incluyas ningún otro texto, explicaciones o markdown fuera del JSON.**
     ```json
     {{
         "matchScore": <int>,
@@ -157,6 +158,7 @@ def analyze_cv_with_gemini(cv_text: str, job_description: str, target_language: 
         - Format: Are there any formatting improvements that would make your CV more readable?
 
     Output format (Strict JSON):
+    **The only output you should provide is the JSON object. Do not include any other text, explanations, or markdown outside of the JSON.**
     ```json
     {{
         "matchScore": <int>,
