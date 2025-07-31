@@ -28,7 +28,6 @@ export function ResultsSection({
   analysisComplete,
   translationComplete,
   progress,
-  activeTab,
   targetLanguage,
   onNewAnalysis,
   onNewTranslation,

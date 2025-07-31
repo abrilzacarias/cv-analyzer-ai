@@ -1,17 +1,21 @@
-# Base image
-FROM node:18-slim
+FROM node:20 AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY package*.json ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Copy source
 COPY . .
 
-# Build and serve
+COPY .env .env
+
 RUN npm run build
-RUN npm install -g serve
-CMD ["serve", "-s", "dist", "-l", "3000"]
+
+FROM nginx:stable-alpine
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

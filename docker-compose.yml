@@ -11,3 +11,13 @@ services:
       - ./backend:/app
     restart: always
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cv-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always

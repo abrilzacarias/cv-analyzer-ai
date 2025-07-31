@@ -4,7 +4,7 @@ import { FileUpload } from "@/components/forms/UploadFile"
 import { AnalysisSection } from "@/components/sections/AnalysisSection"
 import { ResultsSection } from "@/components/results/ResultsSection"
 import { FeaturesSection } from "@/components/sections/FeaturesSection"
-import { AnalysisResult } from "@/components/results/AnalysisResult"
+import type { AnalysisResult } from "@/components/results/AnalysisResult"
 
 interface MainContentProps {
   uploadedFile: File | null

@@ -3,6 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useTranslation } from "react-i18next";
+import type { CVData } from "@/types";
 import {
   Dialog,
   DialogContent,
@@ -39,14 +40,20 @@ const experienceSchema = z.object({
   title: z.string().min(1, "Title is required"),
   company: z.string().min(1, "Company is required"),
   dates: z.string().optional(),
-  description: z.array(z.string()).optional(),
+  description: z.union([
+  z.string(),
+  z.array(z.string()),
+]).optional()
 });
 
 const educationSchema = z.object({
   degree: z.string().min(1, "Degree is required"),
   institution: z.string().min(1, "Institution is required"),
   dates: z.string().optional(),
-  description: z.array(z.string()).optional(),
+  description: z.union([
+  z.string(),
+  z.array(z.string()),
+]).optional()
 });
 
 const cvDataSchema = z.object({
@@ -56,29 +63,27 @@ const cvDataSchema = z.object({
   summary: z.string().optional(),
   experience: z.array(experienceSchema).optional(),
   education: z.array(educationSchema).optional(),
-  skills: z.string().optional(),
-  languages: z.array(z.string()).optional(),
+  skills: z.union([z.string(), z.array(z.string())]).optional(),
+  languages: z.union([z.string(), z.array(z.string())]).optional(),
 });
 
 interface CVEditFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   cvData: CVData;
-  targetLanguage: string;
   onSubmit: (updatedData: CVData) => void;
+  isRegenerating: boolean;
   error?: string | null;
-
 }
 
-
-export function CVEditFormModal({ isOpen, onClose, cvData, targetLanguage, onSubmit, error }: CVEditFormModalProps) {
+export function CVEditFormModal({ isOpen, onClose, cvData, onSubmit, isRegenerating, error }: CVEditFormModalProps) {
   const { t } = useTranslation();
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<CVData>({
+  } = useForm<z.infer<typeof cvDataSchema>>({
     resolver: zodResolver(cvDataSchema),
     defaultValues: cvData,
   });
@@ -203,10 +208,10 @@ export function CVEditFormModal({ isOpen, onClose, cvData, targetLanguage, onSub
           <DialogFooter className="mt-4">
             {error && <p className="text-red-500 text-sm mb-2">{t('common.error.generic')}</p>}
             <DialogClose asChild>
-              <Button type="button" className="hover:cursor-pointer" variant="outline">{t("common.cancel")}</Button>
+              <Button type="button" className="hover:cursor-pointer" variant="outline" disabled={isRegenerating}>{t("common.cancel")}</Button>
             </DialogClose>
-            <Button type="submit" className="hover:cursor-pointer bg-primary">
-              {t("editCV.saveAndGenerate")}
+            <Button type="submit" className="hover:cursor-pointer bg-primary" disabled={isRegenerating}>
+              {isRegenerating ? t("common.generating") : t("editCV.saveAndGenerate")}
             </Button>
           </DialogFooter>
         </form>

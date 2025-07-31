@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react";
 import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
@@ -7,36 +8,9 @@ import { useTranslation } from 'react-i18next';
 import type { AnalysisResult } from "@/components/results/AnalysisResult";
 import { toast } from "sonner";
 import { CVEditFormModal } from "../forms/CVEditFormModal";
+import type { CVData, Experience, Education } from "@/types";
 
 const API_URL = import.meta.env.VITE_API_URL;
-
-// This type should be kept in sync with the backend Pydantic model
-interface CVData {
-  name?: string;
-  title?: string;
-  contact?: {
-    location?: string;
-    phone?: string;
-    email?: string;
-    linkedin?: string;
-    github?: string;
-  };
-  summary?: string;
-  experience?: Array<{
-    title?: string;
-    company?: string;
-    dates?: string;
-    description?: string[];
-  }>;
-  education?: Array<{
-    degree?: string;
-    institution?: string;
-    dates?: string;
-    description?: string[];
-  }>;
-  skills?: string[];
-  languages?: string[];
-}
 
 function CVAnalyzer() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -181,11 +155,11 @@ function CVAnalyzer() {
       languages: Array.isArray(updatedData.languages) ? updatedData.languages : (updatedData.languages as unknown as string || '').split('\n').map(s => s.trim()).filter(Boolean),
       
       // Ensure experience and education descriptions are arrays of strings
-      experience: updatedData.experience?.map(exp => ({
+      experience: updatedData.experience?.map((exp: Experience) => ({
         ...exp,
         description: Array.isArray(exp.description) ? exp.description : (exp.description as unknown as string || '').split('\n').map(s => s.trim()).filter(Boolean),
       })),
-      education: updatedData.education?.map(edu => ({
+      education: updatedData.education?.map((edu: Education) => ({
         ...edu,
         description: Array.isArray(edu.description) ? edu.description : (edu.description as unknown as string || '').split('\n').map(s => s.trim()).filter(Boolean),
       })),
@@ -254,8 +228,8 @@ function CVAnalyzer() {
           isOpen={isEditing}
           onClose={() => setIsEditing(false)}
           cvData={editableCvData}
-          targetLanguage={targetLanguage}
           onSubmit={handleRegeneratePdf}
+          isRegenerating={isRegenerating}
           error={error}
         />
 
