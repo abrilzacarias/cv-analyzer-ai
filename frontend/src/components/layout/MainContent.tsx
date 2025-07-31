@@ -27,6 +27,7 @@ interface MainContentProps {
   analysisResult: AnalysisResult | null
   translationResult: string | null
   error: string | null
+  onEdit: () => void
 }
 
 export function MainContent({
@@ -50,6 +51,7 @@ export function MainContent({
   analysisResult,
   translationResult,
   error,
+  onEdit
 }: MainContentProps) {
   return (
     <main className="container mx-auto px-4 pb-8 max-w-4xl">
@@ -89,6 +91,8 @@ export function MainContent({
         analysisResult={analysisResult}
         translationResult={translationResult}
         error={error}
+        onEdit={onEdit}
+        uploadedFile={uploadedFile}
       />
 
     </main>

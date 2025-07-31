@@ -6,3 +6,4 @@ aiohttp
 google-generativeai
 python-dotenv
 pypdf
+fpdf2

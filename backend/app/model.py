@@ -18,6 +18,83 @@ GEMINI_GENERATION_CONFIG = genai.types.GenerationConfig(
     max_output_tokens=4096
 )
 
+def translate_text_with_gemini(text: str, target_language: str) -> dict:
+    prompt = f"""
+    Your primary and most important task is to translate the content of the following CV into {target_language}.
+    After translating, you must structure the translated content into a valid JSON object.
+
+    **Critical Instructions:**
+    1.  **Translate First:** Every piece of text you extract from the CV must be translated into {target_language} before being placed in the JSON. This is the main goal. Do not translate technical terms, company names, or proper nouns.
+    2.  **Structure the Translation:** Parse the original CV and place the translated content into the following sections: `name`, `title`, `contact` (with `location`, `phone`, `email`, `linkedin`, `github`), `summary`, `experience`, `education`, `skills`, and `languages`.
+    3.  **Omit Missing Sections:** If a section is not found in the original CV, you MUST omit its key from the JSON. Do not invent content or add empty sections.
+    4.  **Strictly Adhere to Schema:** The final output must be ONLY the JSON object, without any extra text, explanations, or markdown.
+
+    **JSON Schema (Omit keys if the section is not present in the original CV):**
+    ```json
+    {{
+      "name": "<string>",
+      "title": "<string|null>",
+      "contact": {{
+        "location": "<string|null>",
+        "phone": "<string|null>",
+        "email": "<string|null>",
+        "linkedin": "<string|null>",
+        "github": "<string|null>"
+      }},
+      "summary": "<string>",
+      "experience": [
+        {{
+          "title": "<string>",
+          "company": "<string>",
+          "dates": "<string>",
+          "description": ["<string>", "<string>"]
+        }}
+      ],
+      "education": [
+        {{
+          "degree": "<string>",
+          "institution": "<string>",
+          "dates": "<string>",
+          "description": ["<string>", "<string>"]
+        }}
+      ],
+      "skills": ["<string>", "<string>"],
+      "languages": ["<string>", "<string>"]
+    }}
+    ```
+
+    **CV Text to Translate and Structure:**
+    {text}
+    """
+    try:
+        response = model.generate_content(prompt, generation_config=GEMINI_GENERATION_CONFIG)
+        
+        if not response.parts:
+            feedback = response.prompt_feedback
+            if feedback and feedback.block_reason:
+                error_detail = f"Content blocked by Gemini (Reason: {feedback.block_reason.name})."
+                raise HTTPException(status_code=400, detail=error_detail)
+            raise HTTPException(status_code=500, detail="Gemini response was empty or blocked.")
+
+        response_text = response.text.strip()
+        
+        if response_text.startswith("```json"):
+            response_text = response_text[len("```json"):].strip()
+        if response_text.endswith("```"):
+            response_text = response_text[:-len("```")].strip()
+
+        try:
+            return json.loads(response_text)
+        except json.JSONDecodeError:
+            print(f"Failed to decode JSON from Gemini response: {response_text}")
+            raise HTTPException(status_code=500, detail="AI returned an invalid JSON format.")
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Unexpected error during Gemini translation: {e}")
+        raise HTTPException(status_code=500, detail="An unexpected error occurred while communicating with the AI.")
+
 def analyze_cv_with_gemini(cv_text: str, job_description: str, target_language: str = "es"):
     prompts = {
         "es": f"""

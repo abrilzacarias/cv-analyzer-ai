@@ -77,7 +77,48 @@ i18n
           "progress_finishing": "Finalizando análisis...",
           "progress_analyzing_cv": "Analizando tu CV...",
           "progress_processing": "Nuestra IA está procesando tu información",
-          "progress_completed": "% completado"
+          "progress_completed": "% completado",
+          "translation_complete_title": "¡Traducción Completada!",
+          "translation_complete_description": "Tu CV ha sido traducido al {{language}}. Puedes previsualizarlo a continuación y descargarlo.",
+          "translation_preview_aria": "Vista previa del CV traducido",
+          "download_translated_cv": "Descargar CV Traducido",
+          "new_translation": "Nueva Traducción",
+          "edit_translated_cv": "Editar CV Traducido",
+          "common": {
+            "cancel": "Cancelar",
+            "generating": "Generando...",
+            "error": {
+              "generic": "Ha ocurrido un error."
+            },
+            "success": {
+              "generic": "¡Guardado exitosamente!"
+            }
+          },
+          "editCV": {
+            "title": "Editar CV",
+            "personalInfo": "Información Personal",
+            "name": "Nombre Completo",
+            "jobTitle": "Puesto de Trabajo",
+            "email": "Correo Electrónico",
+            "phone": "Teléfono",
+            "location": "Ubicación",
+            "linkedin": "Perfil de LinkedIn",
+            "summary": "Resumen Profesional",
+            "experience": "Experiencia Laboral",
+            "company": "Empresa",
+            "dates": "Fechas",
+            "description": "Descripción",
+            "addExperience": "Añadir Experiencia",
+            "education": "Educación",
+            "degree": "Título / Grado",
+            "institution": "Institución",
+            "addEducation": "Añadir Educación",
+            "skills": "Habilidades",
+            "skillsPlaceholder": "Ej: React, Node.js, Python",
+            "languages": "Idiomas",
+            "languagesPlaceholder": "Ej: Español (Nativo), Inglés (Profesional)",
+            "saveAndGenerate": "Guardar y Generar PDF"
+          }
         }
       },
       en: {
@@ -144,10 +185,49 @@ i18n
           "progress_finishing": "Finalizing analysis...",
           "progress_analyzing_cv": "Analyzing your CV...",
           "progress_processing": "Our AI is processing your information",
-          "progress_completed": "% completed"
+          "progress_completed": "% completed",
+          "translation_complete_title": "Translation Complete!",
+          "translation_complete_description": "Your CV has been translated to {{language}}. You can preview it below and download it.",
+          "translation_preview_aria": "Translated CV Preview",
+          "download_translated_cv": "Download Translated CV",
+          "new_translation": "New Translation",
+          "edit_translated_cv": "Edit Translated CV",
+          "common": {
+            "cancel": "Cancel",
+            "generating": "Generating...",
+            "error": {
+              "generic": "An error has occurred."
+            },
+            "success": {
+              "generic": "Saved successfully!"
+            }
+          },
+          "editCV": {
+            "title": "Edit CV",
+            "personalInfo": "Personal Information",
+            "name": "Full Name",
+            "jobTitle": "Job Title",
+            "email": "Email",
+            "phone": "Phone",
+            "location": "Location",
+            "linkedin": "LinkedIn Profile",
+            "summary": "Professional Summary",
+            "experience": "Work Experience",
+            "company": "Company",
+            "dates": "Dates",
+            "description": "Description",
+            "addExperience": "Add Experience",
+            "education": "Education",
+            "degree": "Degree",
+            "institution": "Institution",
+            "addEducation": "Add Education",
+            "skills": "Skills",
+            "skillsPlaceholder": "e.g., React, Node.js, Python",
+            "languages": "Languages",
+            "languagesPlaceholder": "e.g., Spanish (Native), English (Professional)",
+            "saveAndGenerate": "Save and Generate PDF"
+          }
         }
       }
     }
   });
-
-export default i18n;

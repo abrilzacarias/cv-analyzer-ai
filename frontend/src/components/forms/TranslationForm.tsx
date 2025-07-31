@@ -47,7 +47,7 @@ export function TranslationForm({
         <Button
           onClick={onTranslate}
           disabled={!uploadedFile || !targetLanguage || isTranslating}
-          className="w-full bg-primary"
+          className="w-full bg-primary hover:cursor-pointer"
           size="lg"
         >
           {isTranslating ? (

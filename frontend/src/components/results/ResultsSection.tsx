@@ -6,18 +6,20 @@ import { ErrorState } from "@/components/results/ErrorState"
 import type { AnalysisResult } from "./AnalysisResult"
 
 interface ResultsSectionProps {
-  isAnalyzing: boolean
-  isTranslating: boolean
-  analysisComplete: boolean
-  translationComplete: boolean
-  progress: number
-  activeTab: string
-  targetLanguage: string
-  onNewAnalysis: () => void
-  onNewTranslation: () => void
-  analysisResult: AnalysisResult | null
-  translationResult: string | null
-  error: string | null
+  isAnalyzing: boolean;
+  isTranslating: boolean;
+  analysisComplete: boolean;
+  translationComplete: boolean;
+  progress: number;
+  activeTab: string;
+  targetLanguage: string;
+  onNewAnalysis: () => void;
+  onNewTranslation: () => void;
+  analysisResult: AnalysisResult | null;
+  translationResult: string | null;
+  error: string | null;
+  uploadedFile: File | null;
+  onEdit: () => void;
 }
 
 export function ResultsSection({
@@ -33,8 +35,13 @@ export function ResultsSection({
   analysisResult,
   translationResult,
   error,
+  uploadedFile,
+  onEdit,
 }: ResultsSectionProps) {
   const showEmptyState = !isAnalyzing && !analysisComplete && !isTranslating && !translationComplete && !error;
+
+  const originalFileName = uploadedFile?.name.split('.').slice(0, -1).join('.') || 'cv';
+  const translatedFileName = `${originalFileName}_${targetLanguage}.pdf`;
 
   return (
     <div className="space-y-6 mt-8">
@@ -51,15 +58,17 @@ export function ResultsSection({
 
       {/* Translation Results */}
       {translationComplete && translationResult && !error && (
-        <TranslationResults 
-          targetLanguage={targetLanguage} 
-          onNewTranslation={onNewTranslation} 
-          translationResult={translationResult} 
+        <TranslationResults
+          targetLanguage={targetLanguage}
+          onNewTranslation={onNewTranslation}
+          previewUrl={translationResult}
+          fileName={translatedFileName}
+          onEdit={onEdit}
         />
       )}
 
       {/* Empty State */}
       {showEmptyState && <EmptyState />}
     </div>
-  )
+  );
 }
