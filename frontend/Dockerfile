@@ -10,7 +10,7 @@ ENV VITE_API_URL=$VITE_API_URL
 
 COPY . .
 
-RUN npm run build
+RUN VITE_API_URL=$VITE_API_URL npm run build
 
 FROM nginx:stable-alpine
 
