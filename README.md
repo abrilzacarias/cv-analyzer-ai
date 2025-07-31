@@ -1,6 +1,6 @@
 # CV Analyzer AI
 
-CV Analyzer AI is a powerful web application designed to help job seekers optimize their resumes. By leveraging the power of Large Language Models (LLMs), this tool provides intelligent analysis, personalized suggestions, and instant translation, making it an essential asset for anyone looking to enhance their career opportunities.
+CV Analyzer AI is a powerful web application designed to help job seekers optimize their resumes. Powered by Large Language Models (LLMs), it analyzes your CV against a job description, suggests improvements, translates content, and lets you generate a polished PDF — all in one place.
 
 ## ✨ Key Features
 
@@ -54,6 +54,7 @@ This project is built with a modern tech stack, ensuring a robust and scalable a
 ### Deployment
 
 - **Containerization**: [**Docker**](https://www.docker.com/) and **Docker Compose** are used to containerize the frontend and backend services for consistent development and easy deployment.
+- **Northflank (CI/CD)**: The application is deployed using [Northflank](https://northflank.com/), with automatic builds and deployments triggered on every push to the main branch.
 
 ## 📂 Project Structure
 
@@ -77,3 +78,7 @@ This project is built with a modern tech stack, ensuring a robust and scalable a
 ├── docker-compose.yml    # Docker services definition
 └── README.md             # This file
 ```
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
