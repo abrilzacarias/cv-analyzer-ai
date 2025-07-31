@@ -16,14 +16,11 @@ CV Analyzer AI is a powerful web application designed to help job seekers optimi
 
 Here are a few snapshots of the application in action.
 
-*Main view for CV Analysis and Translation.*
-![CV Analyzer Dashboard](https://i.imgur.com/m8S5gI2.png)
+<img width="1919" height="870" alt="image" src="https://github.com/user-attachments/assets/7e6e7233-5d7b-4e05-b9ac-480286e411ce" />
 
-*Example of a CV analysis result, showing the compatibility score and detailed suggestions.*
-![Analysis Result](https://i.imgur.com/mXbBv7o.png)
+<img width="1916" height="869" alt="image" src="https://github.com/user-attachments/assets/f87d6664-d826-4dd3-80cc-a9166de6b3db" />
 
-*The CV editor modal, allowing for real-time changes to the translated content before regenerating the PDF.*
-![CV Editor](https://i.imgur.com/tqZ3yN9.png)
+<img width="1919" height="871" alt="image" src="https://github.com/user-attachments/assets/c1ed19ed-6f86-41fa-9032-33440a48528f" />
 
 ## 🛠️ Technologies Used
 
